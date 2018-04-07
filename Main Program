@@ -19,7 +19,9 @@ namespace Restaurant
             {
                 case "A":
 
-                    breakfastPrint();
+                    //I use this logic for all meals. I print the dictionary out with foreach; 
+                    //Then I have the user select and entry and it affirms it. 
+                    
                     foreach (var breakfast in breakfastPrint())
                     {
                         Console.WriteLine($"{breakfast.Key} {breakfast.Value.Name}: ${breakfast.Value.cost}");
@@ -33,7 +35,6 @@ namespace Restaurant
 
 
                 case "B":
-                    lunchPrint();
                     foreach (var lunch in lunchPrint())
                     {
                         Console.WriteLine($"{lunch.Key} {lunch.Value.Name}: ${lunch.Value.cost}");
@@ -46,7 +47,6 @@ namespace Restaurant
                     }
                     break;
                 case "C":
-                    dinnerPrint();
                     foreach (var dinner in dinnerPrint())
                     {
                         Console.WriteLine($"{dinner.Key} {dinner.Value.Name}: {dinner.Value.cost}");
