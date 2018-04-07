@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Restaurant
+{
+    class Menu
+    {
+        //I used dictonaries so that I can make user choices the KEY. This makes things more streamlined.
+        //Dictonaries are also more scalable than the arrays I used before. I can theoretically make a helper method
+        //that will let users remove and add entries to them so the menu can change.I am thinking 
+
+        public Dictionary<string, Food> breakfastPrint()
+        {
+            Dictionary<string, Food> breakfastMenu = new Dictionary<string, Food>();
+
+            breakfastMenu.Add("A", new Food { meal = Food.Meal.Breakfast, name = "Strawberry Waffles", cost = 11.50m });
+            breakfastMenu.Add("B", new Food { meal = Food.Meal.Breakfast, name = "Biscuits and Gravy", cost = 8.50m });
+            breakfastMenu.Add("C", new Food { meal = Food.Meal.Breakfast, name = "Denver Omelette", cost = 7.50m });
+
+            return breakfastMenu;
+
+        }
+
+
+        public  Dictionary<string, Food> lunchPrint()
+        {
+
+            Dictionary<string, Food> lunchMenu = new Dictionary<string, Food>();
+
+            lunchMenu.Add("A", new Food { meal = Food.Meal.Lunch, name = "Hamburger and Fries", cost = 9.00m });
+            lunchMenu.Add("B", new Food { meal = Food.Meal.Lunch, name = "Pulled Pork Sandwich", cost = 11.50m });
+            lunchMenu.Add("C", new Food { meal = Food.Meal.Lunch, name = "BBQ Chicken", cost = 12.00m });
+
+            return lunchMenu;
+        }
+        public  Dictionary<string, Food> dinnerPrint()
+        {
+            Dictionary<string, Food> dinnerMenu = new Dictionary<string, Food>();
+
+            dinnerMenu.Add("A", new Food { meal = Food.Meal.Dinner, name = "T-Bone Steak", cost = 20.00m });
+            dinnerMenu.Add("B", new Food { meal = Food.Meal.Dinner, name = "Shrimp Scampi", cost = 18.00m });
+            dinnerMenu.Add("C", new Food { meal = Food.Meal.Dinner, name = "Baby Back Ribs", cost = 15.00m });
+
+
+            return dinnerMenu;
+        }
+
+        public  Dictionary<string, Food> drinkPrint()
+        {
+            Dictionary<string, Food> drinkMenu = new Dictionary<string, Food>();
+
+            drinkMenu.Add("A", new Food { drink = Food.Drink.Alcoholic, name = "Beer", cost = 5.00m });
+            drinkMenu.Add("B", new Food { drink = Food.Drink.NonAlcholic, name = "Coffee", cost = 2.50m });
+            drinkMenu.Add("C", new Food { drink = Food.Drink.NonAlcholic, name = "Water", cost = 0.00m });
+            drinkMenu.Add("D", new Food { drink = Food.Drink.Alcoholic, name = "Champagne", cost = 7.00m });
+            drinkMenu.Add("E", new Food { drink = Food.Drink.NonAlcholic, name = "Soda", cost = 3.50m });
+            return drinkMenu;
+
+        }
+
+    }
+}
