@@ -1,0 +1,144 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Restaurant
+{
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+            Food food = new Food();
+            Console.WriteLine("Welcome to our restaurant. ");
+            Console.WriteLine("Select a meal:\nA. Breakfast\nB. Lunch\nC. Dinner");
+            string input = Console.ReadLine().ToUpper();
+            switch (input)
+            {
+                case "A":
+
+                    breakfastPrint();
+                    foreach (var breakfast in breakfastPrint())
+                    {
+                        Console.WriteLine($"{breakfast.Key} {breakfast.Value.Name}: ${breakfast.Value.cost}");
+                    }
+                        Console.WriteLine("What would you like?");
+                    string breakfastChoice = Console.ReadLine().ToUpper();
+                    if (breakfastPrint().ContainsKey(breakfastChoice)==true)
+                    { Console.WriteLine($"You picked {breakfastPrint()[breakfastChoice].Name} "); }
+                    else { Console.WriteLine("Try again"); }
+                    break; 
+
+
+                case "B":
+                    lunchPrint();
+                    foreach (var lunch in lunchPrint())
+                    {
+                        Console.WriteLine($"{lunch.Key} {lunch.Value.Name}: ${lunch.Value.cost}");
+                    }
+                    Console.WriteLine("What would you like?");
+                    string lunchChoice = Console.ReadLine().ToUpper();
+                    if (lunchPrint().ContainsKey(lunchChoice)==true)
+                    {
+                        Console.WriteLine($"You picked {lunchPrint()[lunchChoice].Name}");
+                    }
+                    break;
+                case "C":
+                    dinnerPrint();
+                    foreach (var dinner in dinnerPrint())
+                    {
+                        Console.WriteLine($"{dinner.Key} {dinner.Value.Name}: {dinner.Value.cost}");
+                    }
+                    Console.WriteLine("What would you like?");
+                    string dinnerChoice = Console.ReadLine().ToUpper();
+                    if (dinnerPrint().ContainsKey(dinnerChoice) == true)
+                    {
+                        Console.WriteLine($"You picked {dinnerPrint()[dinnerChoice].Name}");
+                    }
+                    break;
+            }
+            Console.WriteLine("\nSelect a drink");
+            drinkPrint();
+            Console.ReadLine();
+        }
+
+
+
+        //I used dictonaries so that I can make user choices the KEY. This makes things more streamlined. 
+
+        public static Dictionary<string, Food> breakfastPrint()
+        {
+            Dictionary<string, Food> breakfastMenu = new Dictionary<string, Food>();
+            
+                breakfastMenu.Add("A", new Food { meal = Food.Meal.Breakfast, Name = "Strawberry Waffles", cost = 11.50m });
+                breakfastMenu.Add("B",new Food { meal = Food.Meal.Breakfast, Name = "Biscuits and Gravy", cost = 8.50m });
+            breakfastMenu.Add("C", new Food { meal = Food.Meal.Breakfast, Name = "Denver Omelette", cost = 7.50m });
+
+            return breakfastMenu;
+
+        }
+
+
+            public static Dictionary<string, Food> lunchPrint() {
+
+            Dictionary<string, Food> lunchMenu = new Dictionary<string, Food>();
+            {
+                lunchMenu.Add( "A", new Food {meal=Food.Meal.Lunch, Name="Hamburger and Fries", cost=9.00m});
+                lunchMenu.Add("B", new Food { meal = Food.Meal.Lunch, Name = "Pulled Pork Sandwich", cost = 11.50m });
+                lunchMenu.Add("C",new Food{meal=Food.Meal.Lunch, Name="BBQ Chicken", cost=12.00m});
+            };
+            return lunchMenu;
+            }
+        public static Dictionary<string, Food> dinnerPrint()
+        {
+            Dictionary<string, Food> dinnerMenu = new Dictionary<string, Food>();
+            {
+                dinnerMenu.Add("A", new Food {meal=Food.Meal.Dinner, Name="T-Bone Steak", cost=20.00m});
+                dinnerMenu.Add("B", new Food { meal = Food.Meal.Dinner, Name = "Shrimp Scampi", cost = 18.00m });
+                dinnerMenu.Add("C", new Food { meal = Food.Meal.Dinner, Name = "Baby Back Ribs", cost = 15.00m });
+            };
+            
+            return dinnerMenu;
+        }
+
+        public static void drinkPrint()
+        {
+            List<Food> drinkMenu = new List<Food>()
+            {
+                new Food{drink= Food.Drink.Alcoholic, Name="Beer", cost=5.00m},
+                new Food{drink=Food.Drink.NonAlcholic, Name="Coffee", cost=2.50m},
+                new Food{drink=Food.Drink.NonAlcholic, Name="Water", cost=0.00m},
+                new Food{drink=Food.Drink.Alcoholic, Name="Champagne", cost=7.00m},
+                new Food{drink=Food.Drink.NonAlcholic, Name="Soda", cost=3.50m}
+            };
+            foreach( var drink in drinkMenu)
+            {
+                Console.WriteLine($"{drink.Name}: ${drink.cost}");
+            }
+        }
+
+
+        public int AgeCheck()
+        {
+            Console.WriteLine("When were you born?");
+            string birthday = Console.ReadLine();
+            var birthdate =DateTime.Parse(birthday);
+            var age = DateTime.Today - birthdate;
+            int realAge= Int32.Parse(age.ToString());
+            return realAge;
+        }
+
+
+
+
+    }
+
+
+
+}
+
+
+
+
