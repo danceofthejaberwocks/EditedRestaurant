@@ -1,0 +1,190 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Restaurant
+{
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Welcome to our restaurant. ");
+            ChoiceScript();
+            DrinkChoice();
+            doneOrdering();
+            Console.ReadLine();
+            //I made food and drink choices seperate because it fixed issues with drinks triggering multiple times. 
+            //When I had to start it over it was making the drink go 2x. By making it seperate it triggered once. 
+        }
+
+
+        //This is where helper methods live that are not in main program 
+        public static int AgeCheck()
+        {
+            Console.WriteLine("When were you born?");
+            string input = Console.ReadLine();
+            var birthdate = DateTime.Parse(input);
+            var age = DateTime.Today - birthdate;
+            int realAge = (int)age.TotalDays / 365;
+            Console.WriteLine($"You are {realAge} years old. ");
+            return realAge;
+        }
+        public static void doneOrdering()
+        {
+            bool keepOrdering = true;
+            while (keepOrdering == true)
+            {
+                Console.WriteLine("Would you like anything else? Y or N");
+                string answer = Console.ReadLine().ToUpper();
+                switch (answer)
+                {
+                    case "Y":
+                        ChoiceScript();
+                        DrinkChoice();
+
+                        break;
+                    case "N":
+                        keepOrdering = false;
+                        break;
+                    default:
+                        keepOrdering = false;
+                        break;
+                }
+            }
+
+        }
+
+        public int YourTotal(int a)
+        {
+            int index = 0;
+            int total = a + index;
+            return total;
+        }
+
+        public static void ChoiceScript()
+        {
+            Menu menu = new Menu();
+            //That lets me bring all my dictionaries into the main code. They all live in the Menu class 
+
+            Console.WriteLine("Select a meal:\nA. Breakfast\nB. Lunch\nC. Dinner");
+            string input = Console.ReadLine().ToUpper();
+            //I used switch for meals because it is the simplest solution. It will also allow me to add or remove meals more easily. 
+            //Switch is more scalable than the nested else-ifs I used before 
+
+            switch (input)
+            {
+                case "A":
+
+                    foreach (var breakfast in menu.breakfastPrint())
+                    {
+                        Console.WriteLine($"{breakfast.Key} {breakfast.Value.name}: ${breakfast.Value.cost}");
+                    }
+                    Console.WriteLine("What would you like?");
+                    string breakfastChoice = Console.ReadLine().ToUpper();
+                    if (menu.breakfastPrint().ContainsKey(breakfastChoice) == true)
+                    { Console.WriteLine($"You picked {menu.breakfastPrint()[breakfastChoice].name} "); }
+                    else { Console.WriteLine("Try again"); }
+                    break;
+
+
+                case "B":
+                    foreach (var lunch in menu.lunchPrint())
+                    {
+                        Console.WriteLine($"{lunch.Key} {lunch.Value.name}: ${lunch.Value.cost}");
+                    }
+                    Console.WriteLine("What would you like?");
+                    string lunchChoice = Console.ReadLine().ToUpper();
+                    if (menu.lunchPrint().ContainsKey(lunchChoice) == true)
+                    {
+                        Console.WriteLine($"You picked {menu.lunchPrint()[lunchChoice].name}");
+                    }
+                    break;
+                case "C":
+                    foreach (var dinner in menu.dinnerPrint())
+                    {
+                        Console.WriteLine($"{dinner.Key} {dinner.Value.name}: {dinner.Value.cost}");
+                    }
+                    Console.WriteLine("What would you like?");
+                    string dinnerChoice = Console.ReadLine().ToUpper();
+                    if (menu.dinnerPrint().ContainsKey(dinnerChoice) == true)
+                    {
+                        Console.WriteLine($"You picked {menu.dinnerPrint()[dinnerChoice].name}");
+                    }
+                    break;
+                default:
+
+                    Console.WriteLine("That was not an opiton");
+                   ChoiceScript();
+                    break;
+            }
+            
+
+        }
+        public static void DrinkChoice()
+        {
+            Menu menu = new Menu();
+            Console.WriteLine("\nSelect a drink");
+            foreach (var drink in menu.drinkPrint())
+            {
+                Console.WriteLine($"{drink.Key} {drink.Value.name}: ${drink.Value.cost}");
+            }
+            Console.WriteLine("What will you have to drink?");
+            string drinkChoice = Console.ReadLine().ToUpper();
+            //I know this is a lot of nested if else statements but I can not 
+            // figure out how to make it a switch because I need the nesting. 
+            //The first line checks to see if I have the key; otherwise you get an error
+            if (menu.drinkPrint().ContainsKey(drinkChoice) == true)
+            {
+                //The second level of nesting checks to see if the drink was alcohloic and card you
+                if (menu.drinkPrint()[drinkChoice].drink == Food.Drink.Alcoholic)
+                {
+                    //this line cards you 
+                    if (AgeCheck() >= 21)
+                    {
+                        Console.WriteLine($"You picked {menu.drinkPrint()[drinkChoice].name}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("You are too young for that. Pick Again");
+                        Console.WriteLine("What non-alcoholic drink will you have ?");
+                        //I wrote a LINQ query here so that it will force underaged users to pick from a 
+                        //list of only nonalcoholic drinks.This prevents errors and makes it so I don't
+                        // have to loop like I did in my old restaurant app
+                        var nonAlcoholicDrinks = from drink in menu.drinkPrint()
+                                                 where drink.Value.drink == Food.Drink.NonAlcholic
+                                                 select drink;
+
+                        foreach (var drink in nonAlcoholicDrinks)
+                        {
+                            Console.WriteLine($"{drink.Key} {drink.Value.name}: ${drink.Value.cost} ");
+                        }
+
+                        string drinkChoice2 = Console.ReadLine().ToUpper();
+                        Console.WriteLine($"You selected {menu.drinkPrint()[drinkChoice2].name}");
+                    }
+
+                }
+                //this is for all non-alcoholic drinks. No carding needed 
+                else
+                {
+                    Console.WriteLine($"You picked {menu.drinkPrint()[drinkChoice].name}");
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("That is not an opition");
+            }
+        }
+    }
+}
+
+    
+
+
+
+
+
